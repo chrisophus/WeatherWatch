@@ -33,9 +33,9 @@ typedef void(*HTTPPhoneCookieSetHandler)(int32_t request_id, bool successful, vo
 typedef void(*HTTPPhoneCookieFsyncHandler)(bool successful, void* context);
 typedef void(*HTTPPhoneCookieDeleteHandler)(int32_t request_id, bool success, void* context);
 // Time callback
-typedef void(*HTTPTimeHandler)(int32_t utc_offset_seconds, bool is_dst, uint32_t unixtime, const char* tz_name, void* context);
+typedef void(*HTTPTimeHandler)(int32_t utc_offset_seconds, bool is_dst, uint32_t unixtime, const char* tz_name);
 // Location callback
-typedef void(*HTTPLocationHandler)(float latitude, float longitude, float altitude, float accuracy, void* context);
+typedef void(*HTTPLocationHandler)(float latitude, float longitude, float altitude, float accuracy);
 
 // HTTP stuff
 typedef struct {
