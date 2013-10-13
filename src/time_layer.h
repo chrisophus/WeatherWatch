@@ -3,10 +3,12 @@
 
 typedef struct {
 	Layer layer;
+	TextLayer date_layer;
 	BmpContainer digit_layers[4];
 	BmpContainer colon_layer;
 	int8_t layer_states[4];
 	PblTm current_time;
+	char date_buf[8];
 } TimeLayer;
 
 void time_layer_set_time(TimeLayer* time_layer, PblTm time);

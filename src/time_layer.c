@@ -48,6 +48,15 @@ void time_layer_init(TimeLayer* time_layer, GPoint top_left) {
 	
 	for(int i = 0; i < 4; ++i)
 		time_layer->layer_states[i] = -1;
+	
+	// date layer
+    text_layer_init(&time_layer->date_layer, GRect(0, 1, 144, 30));
+    text_layer_set_font(&time_layer->date_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
+    text_layer_set_text_alignment(&time_layer->date_layer, GTextAlignmentCenter);
+	text_layer_set_background_color(&time_layer->date_layer, GColorBlack);
+	text_layer_set_text_color(&time_layer->date_layer, GColorWhite);
+	
+    layer_add_child(&time_layer->layer, &time_layer->date_layer.layer);	
 }
 
 void time_layer_set_time(TimeLayer* time_layer, PblTm time) {
@@ -57,6 +66,9 @@ void time_layer_set_time(TimeLayer* time_layer, PblTm time) {
 	time_layer_set_slot_digit(time_layer, 1, hours % 10);
 	time_layer_set_slot_digit(time_layer, 2, time.tm_min / 10);
 	time_layer_set_slot_digit(time_layer, 3, time.tm_min % 10);
+	
+    string_format_time(time_layer->date_buf, sizeof(time_layer->date_buf), "%a %d", &time);
+    text_layer_set_text(&time_layer->date_layer, time_layer->date_buf);
 }
 
 void time_layer_deinit(TimeLayer* time_layer) {
@@ -92,7 +104,7 @@ static void time_layer_set_slot_digit(TimeLayer* time_layer, uint8_t slot, int8_
 		if(slot != 0) {
 			h_offset = (35 - width) / 2;
 		}
-		layer_set_frame(&time_layer->digit_layers[slot].layer.layer, GRect(SLOT_POSITIONS[slot] + h_offset, 10 + 79 - height, width, height));
+		layer_set_frame(&time_layer->digit_layers[slot].layer.layer, GRect(SLOT_POSITIONS[slot] + h_offset, 18 + 79 - height, width, height));
 		layer_add_child(&time_layer->layer, &time_layer->digit_layers[slot].layer.layer);
 		time_layer->layer_states[slot] = digit;
 	}
